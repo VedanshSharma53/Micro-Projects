@@ -1,8 +1,8 @@
 
 :root {
   --white-color:                  #ffffff;
-  --primary-color:                #13547a;
-  --secondary-color:              #80d0c7;
+  --primary-color:                #000000;
+  --secondary-color:              #b91ddf;
   --section-bg-color:             #f0f8ff;
   --custom-btn-bg-color:          #80d0c7;
   --custom-btn-bg-hover-color:    #13547a;
@@ -137,7 +137,7 @@ strong {
 }
 
 .section-overlay {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, rgb(164, 115, 166) 0%, #000000 100%);
   position: absolute;
   top: 0;
   left: 0;
@@ -476,7 +476,7 @@ strong {
   HERO        
 -----------------------------------------*/
 .hero-section {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, #c469d2 0%, #b80fe2 100%);
   position: relative;
   overflow: hidden;
   padding-top: 150px;
