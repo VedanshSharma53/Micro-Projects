@@ -2,10 +2,10 @@
 :root {
   --white-color:                  #ffffff;
   --primary-color:                #000000;
-  --secondary-color:              #b91ddf;
+  --secondary-color:              #bb12e5;
   --section-bg-color:             #f0f8ff;
-  --custom-btn-bg-color:          #80d0c7;
-  --custom-btn-bg-hover-color:    #13547a;
+  --custom-btn-bg-color:          #000000;
+  --custom-btn-bg-hover-color:    #b80fe2;
   --dark-color:                   #000000;
   --p-color:                      #717275;
   --border-color:                 #7fffd4;
@@ -238,7 +238,7 @@ strong {
   SITE HEADER              
 -----------------------------------------*/
 .site-header {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, #c469d2 0%, #b80fe2 100%);
   padding-top: 150px;
   padding-bottom: 80px;
 }
@@ -476,7 +476,7 @@ strong {
   HERO        
 -----------------------------------------*/
 .hero-section {
-  background-image: linear-gradient(15deg, #c469d2 0%, #b80fe2 100%);
+  background-image: linear-gradient(15deg, #c62bdd 0%, #b80fe2 100%);
   position: relative;
   overflow: hidden;
   padding-top: 150px;
@@ -532,6 +532,8 @@ strong {
   padding: 30px;
   transition: all 0.3s ease;
   height: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .custom-block:hover {
@@ -888,6 +890,7 @@ blockquote {
   padding-bottom: 13px;
   padding-left: 20px;
   outline: none;
+  justify-self: center;
 }
 
 .form-floating>label {
@@ -1143,3 +1146,10 @@ blockquote {
   }
 }
 
+#search53{
+  padding-bottom: 60px;
+}
+
+#marginspace{
+  padding-bottom: 30px;
+}
