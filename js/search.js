@@ -60,6 +60,7 @@ const searchInputv = document.getElementById("keyword");
 // store name elements in array-like object
 const namesFromDOM = document.getElementsByClassName("col-lg-4");
 
+
 // listen for user events
 searchInputv.addEventListener("keyup", (event) => {
     const { value } = event.target;

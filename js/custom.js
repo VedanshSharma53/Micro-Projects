@@ -60,7 +60,7 @@ redirect.addEventListener("click", (event) => {
 });
 
 function openTab(){
-  window.open("search.html","_blank");
+  window.open("search.html","_self");
 }
 
 // const searchInput = document.getElementById("keywordhome");

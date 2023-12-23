@@ -9,7 +9,7 @@
   --dark-color:                   #000000;
   --p-color:                      #717275;
   --border-color:                 #7fffd4;
-  --link-hover-color:             #13547a;
+  --link-hover-color:             #000000;
 
   --body-font-family:             'Open Sans', sans-serif;
   --title-font-family:            'Montserrat', sans-serif;
@@ -238,7 +238,7 @@ strong {
   SITE HEADER              
 -----------------------------------------*/
 .site-header {
-  background-image: linear-gradient(15deg, #c469d2 0%, #b80fe2 100%);
+  background-image: linear-gradient(15deg, #b025c5 0%, #b80fe2 100%);
   padding-top: 150px;
   padding-bottom: 80px;
 }
@@ -501,7 +501,7 @@ strong {
   padding-left: 0;
 }
 
-.hero-section button[type="submit"] {
+.hero-section button[type="button"] {
   background-color: var(--primary-color);
   border: 0;
   border-radius: var(--border-radius-large) !important;
@@ -897,7 +897,7 @@ blockquote {
   padding-left: 20px;
 }
 
-.custom-form button[type="submit"] {
+.custom-form button[type="button"] {
   background: var(--custom-btn-bg-color);
   border: none;
   border-radius: var(--border-radius-large);
@@ -909,8 +909,8 @@ blockquote {
   margin-bottom: 0;
 }
 
-.custom-form button[type="submit"]:hover,
-.custom-form button[type="submit"]:focus {
+.custom-form button[type="button"]:hover,
+.custom-form button[type="button"]:focus {
   background: var(--custom-btn-bg-hover-color);
   border-color: transparent;
 }
@@ -1153,3 +1153,4 @@ blockquote {
 #marginspace{
   padding-bottom: 30px;
 }
+
