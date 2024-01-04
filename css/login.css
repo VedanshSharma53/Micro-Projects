@@ -6,7 +6,7 @@
   --title-font-family:            'Montserrat', sans-serif;
 }
 html {
-  background-image: linear-gradient(15deg, #c62bdd 0%, #b80fe2 100%);
+  background-image: linear-gradient(15deg, #1fa1a1 0%, #30bfaa 100%);
 }
 
 body {
@@ -89,7 +89,7 @@ a.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
-  background-color: #56baed;
+  background-color: #1fa1a1;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -111,7 +111,7 @@ input[type=button], input[type=submit], input[type=reset]  {
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-  background-color: #39ace7;
+  background-color: black;
 }
 
 input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
@@ -145,7 +145,7 @@ input[type=text] {
 
 input[type=text]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid #5f99e9;
 }
 
 input[type=text]:placeholder {

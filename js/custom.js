@@ -91,3 +91,9 @@ function openTab(){
 //         }
 //     }
 // });
+
+let con = getElementById("contactfrm");
+con.addEventListener("click", (e) => {
+  let popup = alert("Form Submitted Successfully!");
+  console.log(popup);
+});
