@@ -92,8 +92,9 @@ function openTab(){
 //     }
 // });
 
-let con = getElementById("contactfrm");
+let con = document.getElementByClass("hello");
 con.addEventListener("click", (e) => {
-  let popup = alert("Form Submitted Successfully!");
+  let popup = alert("Coming Soon");
   console.log(popup);
 });
+
