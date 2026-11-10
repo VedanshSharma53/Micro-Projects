@@ -63,37 +63,9 @@ function openTab(){
   window.open("search.html","_self");
 }
 
-// const searchInput = document.getElementById("keywordhome");
-
-// // store name elements in array-like object
-// const namesFromDOM = document.getElementsByClassName("col-lg-4");
-
-// // listen for user events
-// searchInput.addEventListener("keyup", (event) => {
-//     // openTab();
-
-//     const { value } = event.target;
-    
-//     // get user search input converted to lowercase
-//     const searchQuery = value.toLowerCase();
-    
-//     for (const nameElement of namesFromDOM) {
-//         // store name text and convert to lowercase
-//         let name = nameElement.textContent.toLowerCase();
-        
-//         // compare current name to search input
-//         if (name.includes(searchQuery)) {
-//             // found name matching search, display it
-//             nameElement.style.display = "block";
-//         } else {
-//             // no match, don't display name
-//             nameElement.style.display = "none";
-//         }
-//     }
-// });
-
-let con = getElementById("contactfrm");
+let con = document.getElementByClass("hello");
 con.addEventListener("click", (e) => {
-  let popup = alert("Form Submitted Successfully!");
+  let popup = alert("Coming Soon");
   console.log(popup);
 });
+
