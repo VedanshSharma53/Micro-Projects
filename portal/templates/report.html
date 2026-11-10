@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Originality report {{ c.code }}{% endblock %}
+{% block body %}
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card p-4 text-center">
+      <div class="small muted mb-2">Originality score</div>
+      <div class="score-ring band-{{ r.band.split()[0] }}" style="--v: {{ r.originality }}"><div><div><b>{{ '%.0f'|format(r.originality) }}%</b><div class="small muted">original</div></div></div></div>
+      <div class="mt-3"><span class="badge fs-6 badge-{{ r.band.split()[0] }}">{{ r.band }}</span></div>
+      <div class="small muted mt-2">Highest similarity {{ r.top_score|pct }} · Predicted domain <b>{{ r.domain }}</b></div>
+      <hr>
+      <div class="small muted">Report code</div>
+      <div class="code fs-5">{{ c.code }}</div>
+      <div class="small muted">{{ c.created_at.replace('T', ' ') }} · {{ r.elapsed_ms }} ms</div>
+    </div>
+    {% if me.id == c.user_id %}
+    <div class="card p-4 mt-4">
+      {% if c.project_id %}
+        <div class="text-success"><i class="bi-check2-circle"></i> Submitted for faculty review.</div>
+      {% else %}
+        <h6>Ready to submit?</h6>
+        <p class="small muted">If the score is low, rework your idea and check again. Submitting sends this report to faculty.</p>
+        <form method="post" action="{{ url_for('submit', code=c.code) }}">
+          <input class="form-control form-control-sm mb-2" name="team" placeholder="Team roll numbers (optional)">
+          <button class="btn btn-teal w-100"><i class="bi-send me-1"></i> Submit for faculty review</button>
+        </form>
+        <a class="btn btn-outline-secondary w-100 mt-2" href="{{ url_for('check') }}">Revise and check again</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="col-lg-8">
+    <div class="card p-4">
+      <h5 class="mb-1">{{ c.title }}</h5>
+      <p class="muted small">{{ c.abstract }}</p>
+      <h6 class="mt-2">Most similar projects in the repository</h6>
+      {% include "_matches.html" %}
+      <p class="small muted mt-3 mb-0"><i class="bi-info-circle"></i> Semantic similarity compares meaning (Sentence-BERT); word overlap is the TF-IDF lexical score. A high score means the idea is close to an existing project, not that it was copied. Your guide makes the final decision.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

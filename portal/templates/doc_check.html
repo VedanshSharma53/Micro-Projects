@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Check my document{% endblock %}
+{% block body %}
+{% if tii_demo %}<div class="alert alert-warning small"><i class="bi-cone-striped"></i> <b>Demo mode:</b> no iThenticate API key is configured, so scores on this page are simulated.</div>{% endif %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h4 class="mb-1">Check my document with iThenticate</h4>
+      <p class="muted">Upload your report, paper or abstract. It is checked against the internet, published journals (Crossref) and submitted work through the college's iThenticate licence, and you get the similarity score here &mdash; no need to go through faculty for every draft.</p>
+      <form method="post" enctype="multipart/form-data">
+        <input class="form-control mb-3" type="file" name="file" accept="{{ exts }}" required>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" name="eula" id="eula" value="1" required>
+          <label class="form-check-label small" for="eula">I accept the <a href="{{ eula.url }}" target="_blank" rel="noopener">iThenticate end-user licence agreement</a> (version {{ eula.version }}).</label>
+        </div>
+        <button class="btn btn-teal px-4" {{ 'disabled' if used >= limit }}><i class="bi-cloud-upload me-1"></i> Check similarity</button>
+        <span class="small muted ms-2">{{ used }} of {{ limit }} checks used this week · max {{ max_mb }} MB</span>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h6>How it works</h6>
+      <ul class="small muted ps-3 mb-0">
+        <li>The college's API key stays on the server; students never see it.</li>
+        <li>Draft checks are <b>not added to the iThenticate repository</b>, so your final submission will not match your own drafts.</li>
+        <li>Quotes and bibliography are excluded from the score.</li>
+        <li>The portal keeps only the file's SHA-256 fingerprint and the score, not the file.</li>
+        <li>Each result has a <span class="code">DC-</span> code that faculty can verify.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% if docs %}
+<div class="card p-4 mt-4">
+  <h6>Previous document checks</h6>
+  <table class="table align-middle mb-0">
+    <thead><tr class="small muted"><th>Code</th><th>File</th><th>Similarity</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>{% for d in docs %}
+      <tr><td><a class="code" href="{{ url_for('doc_report', code=d.code) }}">{{ d.code }}</a></td><td>{{ d.filename }}</td>
+        <td>{% if d.score is not none %}<b>{{ '%.0f'|format(d.score) }}%</b>{% else %}&mdash;{% endif %}</td>
+        <td class="small">{{ d.status|lower }}</td><td class="small muted">{{ d.created_at[:10] }}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

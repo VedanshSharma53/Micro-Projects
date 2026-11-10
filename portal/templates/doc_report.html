@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Document check {{ d.code }}{% endblock %}
+{% block body %}
+{% if d.status not in ('COMPLETE', 'ERROR') %}<meta http-equiv="refresh" content="5">{% endif %}
+{% if d.demo %}<div class="alert alert-warning small"><i class="bi-cone-striped"></i> <b>Simulated result (demo mode).</b> This score did not come from iThenticate; it will once the college's API key is configured.</div>{% endif %}
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card p-4 text-center">
+      <div class="small muted mb-2">iThenticate similarity</div>
+      {% if d.status == 'COMPLETE' %}
+        {% set cls = 'Original' if d.score < 15 else ('Related' if d.score < 30 else 'High') %}
+        <div class="score-ring band-{{ cls }}" style="--v: {{ d.score }}"><div><div><b>{{ '%.0f'|format(d.score) }}%</b><div class="small muted">similar</div></div></div></div>
+        <div class="mt-3"><span class="badge fs-6 badge-{{ cls }}">{{ {'Original':'Low','Related':'Moderate','High':'High'}[cls] }} similarity</span></div>
+      {% elif d.status == 'ERROR' %}
+        <div class="text-danger"><i class="bi-exclamation-triangle fs-1"></i><div>Check failed</div></div>
+        <div class="small muted mt-2">{{ d.error }}</div>
+      {% else %}
+        <div class="spinner-border" style="color:var(--teal)"></div>
+        <div class="small muted mt-2">{{ 'Uploading and extracting text' if d.status == 'PROCESSING' else 'Comparing with internet and journal sources' }}&hellip;</div>
+      {% endif %}
+      <hr>
+      <div class="small muted">Report code</div>
+      <div class="code fs-5">{{ d.code }}</div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card p-4">
+      <h5>{{ d.filename }}</h5>
+      <table class="table table-sm small mb-3">
+        <tr><th style="width:35%">Submitted by</th><td>{{ d.name }}</td></tr>
+        <tr><th>Submitted on</th><td>{{ d.created_at.replace('T', ' ') }}</td></tr>
+        <tr><th>File fingerprint (SHA-256)</th><td class="code">{{ d.sha256[:32] }}&hellip;</td></tr>
+        <tr><th>Sources searched</th><td>Internet, published journals (Crossref), submitted work</td></tr>
+        <tr><th>Repository indexing</th><td>Off &mdash; draft is not stored in iThenticate's repository</td></tr>
+        <tr><th>Exclusions</th><td>Quotes and bibliography</td></tr>
+      </table>
+      {% if d.status == 'COMPLETE' %}
+        <a class="btn btn-teal" href="{{ url_for('doc_viewer', code=d.code) }}"><i class="bi-box-arrow-up-right me-1"></i> Open full report with matched sources</a>
+        <p class="small muted mt-3 mb-0"><i class="bi-info-circle"></i> The similarity score is the share of your text that matches other sources. Properly quoted and cited text can still match; read the full report, rewrite in your own words and cite sources, then check again. Your guide decides what is acceptable.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

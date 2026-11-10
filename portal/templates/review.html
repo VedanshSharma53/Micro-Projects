@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Review {{ p.title }}{% endblock %}
+{% block body %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card p-4">
+      <div class="d-flex justify-content-between"><h5>{{ p.title }}</h5><span class="badge text-bg-secondary align-self-start">{{ p.status }}</span></div>
+      <div class="small muted mb-2">{{ p.student }} · {{ p.email }}{% if p.team %} · {{ p.team }}{% endif %} · {{ p.domain }}</div>
+      <p class="small">{{ p.abstract }}</p>
+      <h6>Closest existing projects</h6>
+      {% include "_matches.html" %}
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-4 text-center">
+      <div class="small muted">Originality</div>
+      <div class="display-6 fw-bold">{{ '%.0f'|format(r.originality) }}%</div>
+      <span class="badge badge-{{ r.band.split()[0] }}">{{ r.band }}</span>
+      <div class="small muted mt-2">Report <span class="code">{{ c.code }}</span> · <a href="{{ url_for('verify', code=c.code) }}">verify</a></div>
+    </div>
+    <div class="card p-4 mt-4">
+      <h6>iThenticate document checks</h6>
+      {% for d in docs %}
+        <div class="d-flex justify-content-between small border-top py-1"><a class="code" href="{{ url_for('doc_report', code=d.code) }}">{{ d.code }}</a><span>{{ d.filename }}</span><b>{{ '%.0f'|format(d.score) }}%</b></div>
+      {% else %}<div class="small muted">The student has not checked a document yet.</div>{% endfor %}
+    </div>
+    <div class="card p-4 mt-4">
+      <h6>Decision</h6>
+      <form method="post">
+        <textarea class="form-control mb-2" name="comment" rows="3" placeholder="Comment to the team"></textarea>
+        <div class="d-grid gap-2">
+          <button class="btn btn-success" name="decision" value="approved"><i class="bi-check-lg"></i> Approve</button>
+          <button class="btn btn-warning" name="decision" value="revision"><i class="bi-pencil"></i> Request revision</button>
+          <button class="btn btn-danger" name="decision" value="rejected"><i class="bi-x-lg"></i> Reject</button>
+        </div>
+      </form>
+      {% for rv in reviews %}<div class="small muted mt-2">{{ rv.created_at[:10] }} · {{ rv.name }}: <b>{{ rv.decision }}</b> {{ rv.comment }}</div>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Faculty review{% endblock %}
+{% block body %}
+<div class="card p-4">
+  <h4>Submitted proposals</h4>
+  <p class="muted small">Pending proposals are listed first. Open one to see the closest existing projects and record a decision.</p>
+  <table class="table align-middle mb-0">
+    <thead><tr class="small muted"><th>Title</th><th>Student</th><th>Domain</th><th>Originality</th><th>Result</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {% for p in rows %}
+      <tr>
+        <td><b>{{ p.title }}</b><div class="small muted code">{{ p.code }}</div></td>
+        <td class="small">{{ p.student }}{% if p.team %}<div class="muted">{{ p.team }}</div>{% endif %}</td>
+        <td class="small">{{ p.domain }}</td>
+        <td><b>{{ '%.0f'|format(p.originality or 0) }}%</b></td>
+        <td><span class="badge badge-{{ (p.band or 'Original').split()[0] }}">{{ p.band }}</span></td>
+        <td><span class="badge text-bg-{{ {'pending':'secondary','approved':'success','rejected':'danger','revision':'warning'}[p.status] }}">{{ p.status }}</span></td>
+        <td><a class="btn btn-sm btn-teal" href="{{ url_for('review', pid=p.id) }}">Review</a></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="muted">No submissions yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

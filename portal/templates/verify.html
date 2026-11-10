@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Verify a report{% endblock %}
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h4>Verify an originality report</h4>
+      <p class="muted small">Enter the code printed on a student's report to confirm it was issued by this portal and has not been altered.</p>
+      <form class="d-flex gap-2 mb-3">
+        <input class="form-control code" name="code" value="{{ code }}" placeholder="OR-2611-XXXXXX or DC-2611-XXXXXX">
+        <button class="btn btn-teal px-4">Verify</button>
+      </form>
+      {% if doc is defined %}
+        {% if not doc %}
+          <div class="alert alert-danger mb-0"><i class="bi-x-octagon"></i> No document check with this code exists.</div>
+        {% elif doc.status != 'COMPLETE' %}
+          <div class="alert alert-secondary mb-0">This document check has not finished yet.</div>
+        {% else %}
+          {% if valid %}<div class="alert alert-success"><i class="bi-patch-check-fill"></i> <b>Genuine report.</b> The signature matches the record stored when the check completed.</div>
+          {% else %}<div class="alert alert-danger"><i class="bi-exclamation-triangle"></i> <b>Signature mismatch.</b> This record has been modified after issue.</div>{% endif %}
+          {% if doc.demo %}<div class="alert alert-warning small">Issued in demo mode: the score is simulated.</div>{% endif %}
+          <table class="table table-sm mb-0">
+            <tr><th style="width:35%">Report code</th><td class="code">{{ doc.code }}</td></tr>
+            <tr><th>Student</th><td>{{ doc.name }}</td></tr>
+            <tr><th>File</th><td>{{ doc.filename }}</td></tr>
+            <tr><th>File fingerprint</th><td class="code small">{{ doc.sha256[:32] }}&hellip;</td></tr>
+            <tr><th>Checked on</th><td>{{ doc.completed_at.replace('T', ' ') }}</td></tr>
+            <tr><th>iThenticate similarity</th><td><b>{{ '%.0f'|format(doc.score) }}%</b></td></tr>
+          </table>
+        {% endif %}
+      {% elif code and not c %}
+        <div class="alert alert-danger mb-0"><i class="bi-x-octagon"></i> No report with this code exists.</div>
+      {% elif c %}
+        {% if valid %}
+          <div class="alert alert-success"><i class="bi-patch-check-fill"></i> <b>Genuine report.</b> The signature matches the stored record.</div>
+        {% else %}
+          <div class="alert alert-danger"><i class="bi-exclamation-triangle"></i> <b>Signature mismatch.</b> This record has been modified after issue.</div>
+        {% endif %}
+        <table class="table table-sm mb-0">
+          <tr><th style="width:35%">Report code</th><td class="code">{{ c.code }}</td></tr>
+          <tr><th>Project title</th><td>{{ c.title }}</td></tr>
+          <tr><th>Issued on</th><td>{{ c.created_at.replace('T', ' ') }}</td></tr>
+          <tr><th>Originality</th><td><b>{{ '%.0f'|format(r.originality) }}%</b> <span class="badge badge-{{ r.band.split()[0] }}">{{ r.band }}</span></td></tr>
+          <tr><th>Closest project</th><td>{{ r.matches[0].title }} ({{ r.matches[0].semantic|pct }})</td></tr>
+          <tr><th>Faculty status</th><td>{{ status or 'not submitted' }}</td></tr>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

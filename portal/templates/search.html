@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Search repository{% endblock %}
+{% block body %}
+<div class="card p-4">
+  <h4>Search past projects</h4>
+  <form class="row g-2 mb-3">
+    <div class="col-md-7"><input class="form-control" name="q" value="{{ q }}" placeholder="Describe a topic, e.g. 'help blind people walk safely'"></div>
+    <div class="col-md-3"><select class="form-select" name="domain"><option value="">All domains</option>
+      {% for d in domains %}<option {{ 'selected' if d==domain }}>{{ d }}</option>{% endfor %}</select></div>
+    <div class="col-md-2"><button class="btn btn-teal w-100"><i class="bi-search"></i> Search</button></div>
+  </form>
+  {% if q and not results %}<p class="muted">No projects found.</p>{% endif %}
+  {% for p in results %}
+    <div class="border-top py-3">
+      <div class="d-flex justify-content-between"><b>{{ p.title }}</b><span class="small muted">relevance {{ p.score|pct }}{% if p.keyword %} · keyword match{% endif %}</span></div>
+      <div class="small muted">{{ p.domain }} · {{ p.year }}</div>
+      <div class="small">{{ p.abstract }}</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

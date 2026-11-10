@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My reports{% endblock %}
+{% block body %}
+<div class="card p-4">
+  <h4>My originality reports</h4>
+  {% if not checks %}<p class="muted">No checks yet. <a href="{{ url_for('check') }}">Check your first idea</a>.</p>{% else %}
+  <table class="table align-middle mb-0">
+    <thead><tr class="small muted"><th>Report</th><th>Title</th><th>Originality</th><th>Result</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>
+    {% for c in checks %}
+      <tr>
+        <td><a class="code" href="{{ url_for('report', code=c.code) }}">{{ c.code }}</a></td>
+        <td>{{ c.title }}</td>
+        <td><b>{{ '%.0f'|format(c.originality) }}%</b></td>
+        <td><span class="badge badge-{{ c.band.split()[0] }}">{{ c.band }}</span></td>
+        <td>{% if c.status %}<span class="badge text-bg-{{ {'pending':'secondary','approved':'success','rejected':'danger','revision':'warning'}[c.status] }}">{{ c.status }}</span>{% else %}<span class="small muted">draft</span>{% endif %}</td>
+        <td class="small muted">{{ c.created_at[:10] }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+<div class="card p-4 mt-4">
+  <h4>My iThenticate document checks</h4>
+  {% if not docs %}<p class="muted mb-0">None yet. <a href="{{ url_for('doc_check') }}">Check a document</a>.</p>{% else %}
+  <table class="table align-middle mb-0">
+    <thead><tr class="small muted"><th>Code</th><th>File</th><th>Similarity</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>{% for d in docs %}
+      <tr><td><a class="code" href="{{ url_for('doc_report', code=d.code) }}">{{ d.code }}</a></td><td>{{ d.filename }}</td>
+        <td>{% if d.score is not none %}<b>{{ '%.0f'|format(d.score) }}%</b>{% else %}&mdash;{% endif %}</td>
+        <td class="small">{{ d.status|lower }}{% if d.demo %} <span class="badge text-bg-warning">demo</span>{% endif %}</td>
+        <td class="small muted">{{ d.created_at[:10] }}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

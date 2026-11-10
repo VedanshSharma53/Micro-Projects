@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Topic insights{% endblock %}
+{% block body %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card p-4">
+      <h4>Projects by domain</h4>
+      <p class="muted small">Crowded domains need a more distinctive idea. {{ total }} projects in the repository.</p>
+      {% set mx = rows[0].n if rows else 1 %}
+      {% for r in rows %}
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div style="width:210px" class="small">{{ r.domain }}</div>
+          <div class="bar flex-grow-1" style="height:16px"><span style="width:{{ 100*r.n/mx }}%"></span></div>
+          <div class="small" style="width:30px">{{ r.n }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-4">
+      <h6>Checks run so far</h6>
+      {% for b in bands %}<div class="d-flex justify-content-between"><span class="badge badge-{{ b.band.split()[0] }}">{{ b.band }}</span><b>{{ b.n }}</b></div>{% else %}<p class="muted small">None yet.</p>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

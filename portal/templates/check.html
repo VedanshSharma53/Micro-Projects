@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Check my idea{% endblock %}
+{% block body %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card p-4">
+      <h4 class="mb-1">Check the originality of your project idea</h4>
+      <p class="muted">Your draft is compared with every project in the institutional repository by meaning, not just matching words. Checks are private and unlimited; nothing is shared with faculty until you press <b>Submit</b> on the report.</p>
+      <form method="post">
+        <label class="form-label fw-semibold">Project title</label>
+        <input class="form-control mb-3" name="title" value="{{ title or '' }}" placeholder="e.g. Smart attendance using face recognition" required>
+        <label class="form-label fw-semibold">Abstract</label>
+        <textarea class="form-control mb-3" name="abstract" rows="7" placeholder="Describe the problem, your approach and the main modules (at least 15 words)" required>{{ abstract or '' }}</textarea>
+        <button class="btn btn-teal px-4"><i class="bi-search me-1"></i> Check originality</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-4">
+      <h6>How the score works</h6>
+      <ul class="small muted ps-3 mb-0">
+        <li>Your title and abstract are converted into a sentence embedding (Sentence-BERT).</li>
+        <li>Cosine similarity is computed against every stored project.</li>
+        <li><b>Originality = 100 − highest similarity.</b></li>
+        <li><span class="badge badge-Original">Original</span> below 55% similarity, <span class="badge badge-Related">Related</span> 55–75%, <span class="badge badge-High">High overlap</span> 75% and above.</li>
+        <li>Every report gets a code that faculty can verify.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

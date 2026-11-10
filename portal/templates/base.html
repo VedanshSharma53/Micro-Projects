@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Project Originality Portal{% endblock %} · MLRIT Micro Projects</title>
+  <link href="{{ url_for('assets', folder='css', name='bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('assets', folder='css', name='bootstrap-icons.css') }}" rel="stylesheet">
+  <style>
+    :root { --teal: #1fa1a1; --ink: #111; --muted: #6b6f75; --bg: #f0f8ff; }
+    body { background: var(--bg); color: var(--ink); font-family: "Segoe UI", system-ui, sans-serif; }
+    .navbar { background: #000; }
+    .navbar-brand { font-weight: 700; letter-spacing: .3px; }
+    .navbar-brand span { color: var(--teal); }
+    .nav-link { color: #ddd !important; }
+    .nav-link.active, .nav-link:hover { color: var(--teal) !important; }
+    .card { border: 0; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+    .btn-teal { background: var(--teal); color: #fff; border: 0; }
+    .btn-teal:hover { background: #178585; color: #fff; }
+    .score-ring { width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center;
+      background: conic-gradient(var(--ring) calc(var(--v) * 1%), #e6ecef 0); margin: 0 auto; }
+    .score-ring > div { width: 118px; height: 118px; border-radius: 50%; background: #fff; display: grid; place-items: center; text-align: center; }
+    .score-ring b { font-size: 2rem; line-height: 1; }
+    .band-Original { --ring: #2e9d5b; } .band-Related { --ring: #e0a100; } .band-High { --ring: #d64545; }
+    .badge-Original { background: #2e9d5b; } .badge-Related { background: #e0a100; } .badge-High { background: #d64545; }
+    .bar { height: 10px; border-radius: 6px; background: #e6ecef; overflow: hidden; }
+    .bar > span { display: block; height: 100%; background: var(--teal); }
+    .muted { color: var(--muted); }
+    .code { font-family: Consolas, monospace; letter-spacing: .5px; }
+    footer { color: var(--muted); font-size: .85rem; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('home') }}"><i class="bi-shield-check"></i> Micro Projects <span>Originality</span></a>
+    {% if me %}
+    <ul class="navbar-nav me-auto">
+      {% set ep = request.endpoint %}
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep=='check' }}" href="{{ url_for('check') }}">Check idea</a></li>
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep in ('doc_check','doc_report') }}" href="{{ url_for('doc_check') }}">Check document</a></li>
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep=='mine' }}" href="{{ url_for('mine') }}">My reports</a></li>
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep=='search' }}" href="{{ url_for('search') }}">Search</a></li>
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep=='insights' }}" href="{{ url_for('insights') }}">Insights</a></li>
+      {% if me.role == 'faculty' %}<li class="nav-item"><a class="nav-link {{ 'active' if ep in ('faculty','review') }}" href="{{ url_for('faculty') }}">Review</a></li>{% endif %}
+      <li class="nav-item"><a class="nav-link {{ 'active' if ep=='verify' }}" href="{{ url_for('verify') }}">Verify</a></li>
+    </ul>
+    <span class="navbar-text text-light small me-3"><i class="bi-person-circle"></i> {{ me.name }} · <span class="text-info">{{ me.role }}</span></span>
+    <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Sign out</a>
+    {% endif %}
+  </div>
+</nav>
+<main class="container">
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% for cat, m in msgs %}<div class="alert alert-{{ cat }}">{{ m }}</div>{% endfor %}
+  {% endwith %}
+  {% block body %}{% endblock %}
+</main>
+<footer class="container py-4 text-center">MLR Institute of Technology · Department of CSE · Similarity scores support, and do not replace, faculty judgement.</footer>
+</body>
+</html>

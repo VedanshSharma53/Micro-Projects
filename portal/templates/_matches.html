@@ -1,0 +1,15 @@
+<table class="table align-middle mb-0">
+  <thead><tr class="small muted"><th>#</th><th>Closest existing project</th><th>Domain</th><th style="width:28%">Semantic similarity</th><th>Word overlap</th></tr></thead>
+  <tbody>
+  {% for m in r.matches %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td><b>{{ m.title }}</b>{% if m.year %} <span class="small muted">({{ m.year }})</span>{% endif %}</td>
+      <td class="small">{{ m.domain }}</td>
+      <td><div class="d-flex align-items-center gap-2"><div class="bar flex-grow-1"><span style="width:{{ (m.semantic*100)|round(1) if m.semantic > 0 else 0 }}%"></span></div><span class="small">{{ m.semantic|pct }}</span></div>
+          <span class="badge badge-{{ m.band.split()[0] }}">{{ m.band }}</span></td>
+      <td class="small">{{ m.lexical|pct }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
