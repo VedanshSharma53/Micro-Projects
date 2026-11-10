@@ -201,8 +201,8 @@ r = p.add_run("AI-Powered Student Project Repository with Self-Service Originali
 r.font.size = Pt(22)
 
 AFF = ["Dept. of Computer Science and Engineering", "MLR Institute of Technology", "Hyderabad, India"]
-authors = [("Vedansh", "23R21A05EX"), ("Shyamala", "23R21A05DT"), ("Ankith", "23R21A05EF"),
-           ("Roshan", "23R21A05DL"), ("Dr. D.B.K. Kamesh", "Professor and Project Guide")]
+authors = [("Dr. D.B.K. Kamesh", "Professor and Project Guide"), ("Vedansh", "23R21A05EX"),
+           ("Shyamala", "23R21A05DT"), ("Ankith", "23R21A05EF"), ("Roshan", "23R21A05DL")]
 for group in (authors[:3], authors[3:]):
     t = doc.add_table(rows=1, cols=len(group))
     t.alignment = WD_TABLE_ALIGNMENT.CENTER
