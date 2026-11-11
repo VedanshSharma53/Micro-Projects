@@ -1,0 +1,10 @@
+.git
+.claude
+.vscode
+paper
+images
+js
+*.html
+portal/instance
+portal/eval/screens
+**/__pycache__

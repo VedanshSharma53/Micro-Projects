@@ -1,0 +1,13 @@
+# One-click deploy on Render: Dashboard -> New -> Blueprint -> pick this repository.
+services:
+  - type: web
+    name: mlrit-originality-portal
+    runtime: docker
+    plan: free
+    branch: feature/similarity-portal
+    healthCheckPath: /login
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEV_LOGIN
+        value: "1"
